@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script type="text/babel">
+      let state = [];
+
+      function reRender() {
+        root.render(<App />);
+      }
+
+      function useState(initialValue) {
+        if (state.length) return state;
+        function setValue(newValue) {
+          state[0] = newValue;
+          reRender();
+        }
+        state = [initialValue, setValue];
+        return state;
+      }
+
+      const App = () => {
+        const [count, setCount] = useState(0);
+        return (
+          <div>
+            <h1>The counter example</h1>
+            <button onClick={() => setCount(count - 1)}>-</button>
+            <span>{count}</span>
+            <button onClick={() => setCount(count + 1)}>+</button>
+          </div>
+        );
+      };
+      const rootElement = document.getElementById("root");
+      const root = ReactDOM.createRoot(rootElement);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
